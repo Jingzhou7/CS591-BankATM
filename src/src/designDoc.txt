@@ -1,0 +1,88 @@
+Jingzhou Xue
+U10828768
+jxue@bu.edu
+
+CS591 BankATM
+
+Main:
+    initialize an instance of Bank.
+    use the bank created to initialize the very first GUI
+
+Bank:
+    Bank is the core of the bankATM
+    it contains all customers, managers, profits and transactions
+    since profits and transactions belong to the bank, all "should-be" manager methods are implemented here in bank
+
+BankATM:
+    BankATM is the ATM machine which contains all bank services
+    All other ATM services before user login would extend this class
+
+PickRollGUI, CustomerSignGUI, ManagerSignGUI all extends BankATM
+    These 3 GUI class are extended from BankATM to provide user interface for operations before SignIn
+    they need to have access to the bank core
+
+ATMService:
+    abstract ATMService is the bankATM after user has signed in.
+    it not only has an instance of the bank, but also keeps user cache
+    All other ATM services after user login would extend this class
+
+OpenAccountGUI, CustomerGUI, ManagerGUI all extends ATMService
+    these 3 GUI class are subclasses of ATMService
+    They need to have the cached user information in order to provide correct services
+
+Enum AccountType, CurrencyUnit, TransactionType, UserType
+    these 4 enum classes enumerate the types supported in this ATM implementation
+
+Account
+    abstract Account is used to make CheckingAccount and SavingAccount
+
+User
+    abstract Account is used to make Customer and Manager
+
+Currency, Loan, Transaction
+    these 3 classes are user-made data types that are heavily used in this ATM
+
+Interest and ServiceFee
+    these 2 classes are similar but have different implementation
+    Interest is only calculated once when needed, so we simply put a static function to calculate the Interest
+    ServiceFee on the other hand, can occur when any service is provided, so we make an instance of it everytime
+
+SavingAccountGUI and CheckingAccountGUI
+    these 2 class are not implemented yet.
+    design to move some functions from CustomerGUI to these new classes
+    because operations are done on the account level, not user level
+
+GUI classes
+    the GUI classes are named very intuitively. every GUI class is a different frame with different component on.
+
+
+To sum up, I tried to think about 2 variations of bankATM implementation when I made these design choices. The other variation is the online CryptoCurrency Wallet. Thus, I broke the project down and started from making a Currency class.
+Enum classes are used to get rid of many many String representations. Also, I don't need to check invalid String input.
+GUI classes are almost one-to-one corresponding to an object class that contains actual functions.
+This design would let me implement CryptoWallet relatively easily of course. I believe many parts are very reusable.
+
+This is the overall design. Implementation are not complete
+
+
+
+readme
+run the main
+a frame pop up. click on either Customer or Manager to continue
+For test purpose, I have created test users and accounts
+Customer 1: UserName "alice"  Password "123"
+Customer 2: UserName "bob"  Password "234"
+Bank Manager: UserName "cpk"  Password "cs591"
+
+
+
+up to now, the workable functions include
+everything before user signing in (sign in and sign up for both users, and make cache),
+and openAccount, deposit, withdraw, transfer and requestLoan for User,
+and all functions for Manager
+
+Noticable flaws and possible future to-do:
+
+All "Filling form" GUI except for UserSignGUI do not close window and go back automatically. (not implemented yet). However, there is a "Go Back" or "Log out" button on every page that can lead you to the previous page.
+User have to manually click on go back always.
+
+many more functions to be implemented
